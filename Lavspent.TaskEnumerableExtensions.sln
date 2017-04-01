@@ -5,6 +5,12 @@ VisualStudioVersion = 15.0.26228.10
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lavspent.TaskEnumerableExtensions", "TaskEnumerableExtensions\Lavspent.TaskEnumerableExtensions.csproj", "{761DEE9C-3F5E-4403-B0CA-D8F4BA4F652F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Misc", "Misc", "{3D33D95D-9B37-4DA2-B590-7D4234F90975}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
