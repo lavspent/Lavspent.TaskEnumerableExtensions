@@ -181,12 +181,24 @@ namespace Lavspent.TaskEnumerableExtensions
             return outer.GroupJoin(await Cfg(inner), outerKeySelector, innerKeySelector, resultSelector);
         }
 
+        public static async Task<IEnumerable<TResult>> GroupJoin<TOuter, TInner, TKey, TResult>(this Task<IEnumerable<TOuter>> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
+        {
+            return (await Cfg(outer)).GroupJoin(inner, outerKeySelector, innerKeySelector, resultSelector, comparer);
+        }
+
+        public static async Task<IEnumerable<TResult>> GroupJoin<TOuter, TInner, TKey, TResult>(this Task<IEnumerable<TOuter>> outer, Task<IEnumerable<TInner>> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
+        {
+            await Task.WhenAll(outer, inner).ConfigureAwait(false);
+            return outer.Result.GroupJoin(inner.Result, outerKeySelector, innerKeySelector, resultSelector, comparer);
+        }
+
+        public static async Task<IEnumerable<TResult>> GroupJoin<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, Task<IEnumerable<TInner>> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
+        {
+            return outer.GroupJoin(await Cfg(inner), outerKeySelector, innerKeySelector, resultSelector, comparer);
+        }
+
         #endregion
 
-
-        //public static async Task<IEnumerable<TResult>> GroupJoin<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, IEnumerable<TInner>, TResult> resultSelector, IEqualityComparer<TKey> comparer)
-        //{
-        //}
 
         //public static IOrderedEnumerable<TSource> OrderBy<TSource, TKey>(this Task<IEnumerable<TSource>> source, Func<TSource, TKey> keySelector)
         //{
