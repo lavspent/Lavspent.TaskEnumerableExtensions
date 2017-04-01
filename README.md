@@ -1,14 +1,23 @@
 # Lavspent.TaskEnumerableExtensions
 
-Adds async Linq extensions to `Task<IEnumerable<T>>` so 
+Adds async Linq extensions to `Task<IEnumerable<T>>`.
 
-instead of this:
+## Install
+
+```
+nuget.exe install Lavspent.TaskEnumerableExtensions
+```
+
+## Use
+
+Instead of:
+
 
 ```c#
 var first = (await GetListAsync()).First();
 ```
 
-we can :
+you can:
 
 ```c#
 var first = await GetListAsync().First();
