@@ -59,32 +59,32 @@ namespace Lavspent.TaskEnumerableExtensions
 
         #region Select/SelectMany
 
-        public static async Task<IEnumerable<TResult>> Select<TSource, TResult>(this Task<IEnumerable<TSource>> source, Func<TSource, TResult> selector)
+        public static async Task<IEnumerable<TResult>> Select<TSourceEnumerable, TSource, TResult>(this Task<TSourceEnumerable> source, Func<TSource, TResult> selector) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).Select(selector);
         }
 
-        public static async Task<IEnumerable<TResult>> Select<TSource, TResult>(this Task<IEnumerable<TSource>> source, Func<TSource, int, TResult> selector)
+        public static async Task<IEnumerable<TResult>> Select<TSourceEnumerable, TSource, TResult>(this Task<TSourceEnumerable> source, Func<TSource, int, TResult> selector) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).Select(selector);
         }
 
-        public static async Task<IEnumerable<TResult>> SelectMany<TSource, TResult>(this Task<IEnumerable<TSource>> source, Func<TSource, IEnumerable<TResult>> selector)
+        public static async Task<IEnumerable<TResult>> SelectMany<TSourceEnumerable, TSource, TResult>(this Task<TSourceEnumerable> source, Func<TSource, IEnumerable<TResult>> selector) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).SelectMany(selector);
         }
 
-        public static async Task<IEnumerable<TResult>> SelectMany<TSource, TResult>(this Task<IEnumerable<TSource>> source, Func<TSource, int, IEnumerable<TResult>> selector)
+        public static async Task<IEnumerable<TResult>> SelectMany<TSourceEnumerable, TSource, TResult>(this Task<TSourceEnumerable> source, Func<TSource, int, IEnumerable<TResult>> selector) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).SelectMany(selector);
         }
 
-        public static async Task<IEnumerable<TResult>> SelectMany<TSource, TCollection, TResult>(this Task<IEnumerable<TSource>> source, Func<TSource, int, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector)
+        public static async Task<IEnumerable<TResult>> SelectMany<TSourceEnumerable, TSource, TCollection, TResult>(this Task<TSourceEnumerable> source, Func<TSource, int, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).SelectMany(collectionSelector, resultSelector);
         }
 
-        public static async Task<IEnumerable<TResult>> SelectMany<TSource, TCollection, TResult>(this Task<IEnumerable<TSource>> source, Func<TSource, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector)
+        public static async Task<IEnumerable<TResult>> SelectMany<TSourceEnumerable, TSource, TCollection, TResult>(this Task<TSourceEnumerable> source, Func<TSource, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).SelectMany(collectionSelector, resultSelector);
         }
