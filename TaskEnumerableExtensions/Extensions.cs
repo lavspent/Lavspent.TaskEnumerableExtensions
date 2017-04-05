@@ -59,32 +59,32 @@ namespace Lavspent.TaskEnumerableExtensions
 
         #region Select/SelectMany
 
-        public static async Task<IEnumerable<TResult>> Select<TSourceEnumerable, TSource, TResult>(this Task<TSourceEnumerable> source, Func<TSource, TResult> selector) where TSourceEnumerable : IEnumerable<TSource>
+        public static async Task<IEnumerable<TResult>> Select<TSource, TResult>(this Task<IEnumerable<TSource>> source, Func<TSource, TResult> selector)
         {
             return (await Cfg(source)).Select(selector);
         }
 
-        public static async Task<IEnumerable<TResult>> Select<TSourceEnumerable, TSource, TResult>(this Task<TSourceEnumerable> source, Func<TSource, int, TResult> selector) where TSourceEnumerable : IEnumerable<TSource>
+        public static async Task<IEnumerable<TResult>> Select<TSource, TResult>(this Task<IEnumerable<TSource>> source, Func<TSource, int, TResult> selector)
         {
             return (await Cfg(source)).Select(selector);
         }
 
-        public static async Task<IEnumerable<TResult>> SelectMany<TSourceEnumerable, TSource, TResult>(this Task<TSourceEnumerable> source, Func<TSource, IEnumerable<TResult>> selector) where TSourceEnumerable : IEnumerable<TSource>
+        public static async Task<IEnumerable<TResult>> SelectMany<TSource, TResult>(this Task<IEnumerable<TSource>> source, Func<TSource, IEnumerable<TResult>> selector)
         {
             return (await Cfg(source)).SelectMany(selector);
         }
 
-        public static async Task<IEnumerable<TResult>> SelectMany<TSourceEnumerable, TSource, TResult>(this Task<TSourceEnumerable> source, Func<TSource, int, IEnumerable<TResult>> selector) where TSourceEnumerable : IEnumerable<TSource>
+        public static async Task<IEnumerable<TResult>> SelectMany<TSource, TResult>(this Task<IEnumerable<TSource>> source, Func<TSource, int, IEnumerable<TResult>> selector)
         {
             return (await Cfg(source)).SelectMany(selector);
         }
 
-        public static async Task<IEnumerable<TResult>> SelectMany<TSourceEnumerable, TSource, TCollection, TResult>(this Task<TSourceEnumerable> source, Func<TSource, int, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector) where TSourceEnumerable : IEnumerable<TSource>
+        public static async Task<IEnumerable<TResult>> SelectMany<TSource, TCollection, TResult>(this Task<IEnumerable<TSource>> source, Func<TSource, int, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector)
         {
             return (await Cfg(source)).SelectMany(collectionSelector, resultSelector);
         }
 
-        public static async Task<IEnumerable<TResult>> SelectMany<TSourceEnumerable, TSource, TCollection, TResult>(this Task<TSourceEnumerable> source, Func<TSource, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector) where TSourceEnumerable : IEnumerable<TSource>
+        public static async Task<IEnumerable<TResult>> SelectMany<TSource, TCollection, TResult>(this Task<IEnumerable<TSource>> source, Func<TSource, IEnumerable<TCollection>> collectionSelector, Func<TSource, TCollection, TResult> resultSelector)
         {
             return (await Cfg(source)).SelectMany(collectionSelector, resultSelector);
         }
@@ -93,16 +93,16 @@ namespace Lavspent.TaskEnumerableExtensions
 
         #region Take/TakeWhile
 
-        public static async Task<IEnumerable<TSource>> Take<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, int count) where TSourceEnumerable : IEnumerable<TSource>
+        public static async Task<IEnumerable<TSource>> Take<TSource>(this Task<IEnumerable<TSource>> source, int count)
         {
             return (await Cfg(source)).Take(count);
         }
 
-        public static async Task<IEnumerable<TSource>> TakeWhile<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, Func<TSource, bool> predicate) where TSourceEnumerable : IEnumerable<TSource>
+        public static async Task<IEnumerable<TSource>> TakeWhile<TSource>(this Task<IEnumerable<TSource>> source, Func<TSource, bool> predicate)
         {
             return (await Cfg(source)).TakeWhile(predicate);
         }
-        public static async Task<IEnumerable<TSource>> TakeWhile<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, Func<TSource, int, bool> predicate) where TSourceEnumerable : IEnumerable<TSource>
+        public static async Task<IEnumerable<TSource>> TakeWhile<TSource>(this Task<IEnumerable<TSource>> source, Func<TSource, int, bool> predicate)
         {
             return (await Cfg(source)).TakeWhile(predicate);
         }
@@ -111,17 +111,17 @@ namespace Lavspent.TaskEnumerableExtensions
 
         #region Skip/SkipWhile
 
-        public static async Task<IEnumerable<TSource>> Skip<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, int count) where TSourceEnumerable : IEnumerable<TSource>
+        public static async Task<IEnumerable<TSource>> Skip<TSource>(this Task<IEnumerable<TSource>> source, int count)
         {
             return (await Cfg(source)).Skip(count);
         }
 
-        public static async Task<IEnumerable<TSource>> SkipWhile<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, Func<TSource, bool> predicate) where TSourceEnumerable : IEnumerable<TSource>
+        public static async Task<IEnumerable<TSource>> SkipWhile<TSource>(this Task<IEnumerable<TSource>> source, Func<TSource, bool> predicate)
         {
             return (await Cfg(source)).SkipWhile(predicate);
         }
 
-        public static async Task<IEnumerable<TSource>> SkipWhile<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, Func<TSource, int, bool> predicate) where TSourceEnumerable : IEnumerable<TSource>
+        public static async Task<IEnumerable<TSource>> SkipWhile<TSource>(this Task<IEnumerable<TSource>> source, Func<TSource, int, bool> predicate)
         {
             return (await Cfg(source)).SkipWhile(predicate);
         }
@@ -130,46 +130,34 @@ namespace Lavspent.TaskEnumerableExtensions
 
         #region Join
 
-        public static async Task<IEnumerable<TResult>> Join<TOuterEnumerable, TOuter, TInnerEnumerable, TInner, TKey, TResult>(this Task<TOuterEnumerable> outer, TInnerEnumerable inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector) 
-            where TOuterEnumerable : IEnumerable<TOuter> 
-            where TInnerEnumerable : IEnumerable<TInner>
+        public static async Task<IEnumerable<TResult>> Join<TOuter, TInner, TKey, TResult>(this Task<IEnumerable<TOuter>> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector)
         {
             return (await Cfg(outer)).Join(inner, outerKeySelector, innerKeySelector, resultSelector);
         }
 
-        public static async Task<IEnumerable<TResult>> Join<TOuterEnumerable, TOuter, TInnerEnumerable, TInner, TKey, TResult>(this Task<TOuterEnumerable> outer, Task<TInnerEnumerable> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector) 
-            where TOuterEnumerable : IEnumerable<TOuter> 
-            where TInnerEnumerable : IEnumerable<TInner>
+        public static async Task<IEnumerable<TResult>> Join<TOuter, TInner, TKey, TResult>(this Task<IEnumerable<TOuter>> outer, Task<IEnumerable<TInner>> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector)
         {
             await Task.WhenAll(outer, inner).ConfigureAwait(false);
             return outer.Result.Join(inner.Result, outerKeySelector, innerKeySelector, resultSelector);
         }
 
-        public static async Task<IEnumerable<TResult>> Join<TOuterEnumerable, TOuter, TInnerEnumerable, TInner, TKey, TResult>(this TOuterEnumerable outer, Task<TInnerEnumerable> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector)
-            where TOuterEnumerable : IEnumerable<TOuter> 
-            where TInnerEnumerable : IEnumerable<TInner>
+        public static async Task<IEnumerable<TResult>> Join<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, Task<IEnumerable<TInner>> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector)
         {
             return outer.Join(await Cfg(inner), outerKeySelector, innerKeySelector, resultSelector);
         }
 
-        public static async Task<IEnumerable<TResult>> Join<TOuterEnumerable, TOuter, TInnerEnumerable, TInner, TKey, TResult>(this Task<TOuterEnumerable> outer, TInnerEnumerable inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer) 
-            where TOuterEnumerable : IEnumerable<TOuter> 
-            where TInnerEnumerable : IEnumerable<TInner>
+        public static async Task<IEnumerable<TResult>> Join<TOuter, TInner, TKey, TResult>(this Task<IEnumerable<TOuter>> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer)
         {
             return (await Cfg(outer)).Join(inner, outerKeySelector, innerKeySelector, resultSelector, comparer);
         }
 
-        public static async Task<IEnumerable<TResult>> Join<TOuterEnumerable, TOuter, TInnerEnumerable, TInner, TKey, TResult>(this Task<TOuterEnumerable> outer, Task<TInnerEnumerable> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer) 
-            where TOuterEnumerable : IEnumerable<TOuter> 
-            where TInnerEnumerable : IEnumerable<TInner>
+        public static async Task<IEnumerable<TResult>> Join<TOuter, TInner, TKey, TResult>(this Task<IEnumerable<TOuter>> outer, Task<IEnumerable<TInner>> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer)
         {
             await Task.WhenAll(outer, inner).ConfigureAwait(false);
             return outer.Result.Join(inner.Result, outerKeySelector, innerKeySelector, resultSelector, comparer);
         }
 
-        public static async Task<IEnumerable<TResult>> Join<TOuterEnumerable, TOuter, TInnerEnumerable, TInner, TKey, TResult>(this TOuterEnumerable outer, Task<TInnerEnumerable> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer) 
-            where TOuterEnumerable : IEnumerable<TOuter> 
-            where TInnerEnumerable : IEnumerable<TInner>
+        public static async Task<IEnumerable<TResult>> Join<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, Task<IEnumerable<TInner>> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer)
         {
             return outer.Join(await Cfg(inner), outerKeySelector, innerKeySelector, resultSelector, comparer);
         }
