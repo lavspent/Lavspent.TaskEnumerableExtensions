@@ -111,17 +111,17 @@ namespace Lavspent.TaskEnumerableExtensions
 
         #region Skip/SkipWhile
 
-        public static async Task<IEnumerable<TSource>> Skip<TSource>(this Task<IEnumerable<TSource>> source, int count)
+        public static async Task<IEnumerable<TSource>> Skip<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, int count) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).Skip(count);
         }
 
-        public static async Task<IEnumerable<TSource>> SkipWhile<TSource>(this Task<IEnumerable<TSource>> source, Func<TSource, bool> predicate)
+        public static async Task<IEnumerable<TSource>> SkipWhile<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, Func<TSource, bool> predicate) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).SkipWhile(predicate);
         }
 
-        public static async Task<IEnumerable<TSource>> SkipWhile<TSource>(this Task<IEnumerable<TSource>> source, Func<TSource, int, bool> predicate)
+        public static async Task<IEnumerable<TSource>> SkipWhile<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, Func<TSource, int, bool> predicate) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).SkipWhile(predicate);
         }
