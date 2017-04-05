@@ -93,16 +93,16 @@ namespace Lavspent.TaskEnumerableExtensions
 
         #region Take/TakeWhile
 
-        public static async Task<IEnumerable<TSource>> Take<TSource>(this Task<IEnumerable<TSource>> source, int count)
+        public static async Task<IEnumerable<TSource>> Take<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, int count) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).Take(count);
         }
 
-        public static async Task<IEnumerable<TSource>> TakeWhile<TSource>(this Task<IEnumerable<TSource>> source, Func<TSource, bool> predicate)
+        public static async Task<IEnumerable<TSource>> TakeWhile<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, Func<TSource, bool> predicate) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).TakeWhile(predicate);
         }
-        public static async Task<IEnumerable<TSource>> TakeWhile<TSource>(this Task<IEnumerable<TSource>> source, Func<TSource, int, bool> predicate)
+        public static async Task<IEnumerable<TSource>> TakeWhile<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, Func<TSource, int, bool> predicate) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).TakeWhile(predicate);
         }
