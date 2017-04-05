@@ -130,34 +130,46 @@ namespace Lavspent.TaskEnumerableExtensions
 
         #region Join
 
-        public static async Task<IEnumerable<TResult>> Join<TOuter, TInner, TKey, TResult>(this Task<IEnumerable<TOuter>> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector)
+        public static async Task<IEnumerable<TResult>> Join<TOuterEnumerable, TOuter, TInnerEnumerable, TInner, TKey, TResult>(this Task<TOuterEnumerable> outer, TInnerEnumerable inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector) 
+            where TOuterEnumerable : IEnumerable<TOuter> 
+            where TInnerEnumerable : IEnumerable<TInner>
         {
             return (await Cfg(outer)).Join(inner, outerKeySelector, innerKeySelector, resultSelector);
         }
 
-        public static async Task<IEnumerable<TResult>> Join<TOuter, TInner, TKey, TResult>(this Task<IEnumerable<TOuter>> outer, Task<IEnumerable<TInner>> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector)
+        public static async Task<IEnumerable<TResult>> Join<TOuterEnumerable, TOuter, TInnerEnumerable, TInner, TKey, TResult>(this Task<TOuterEnumerable> outer, Task<TInnerEnumerable> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector) 
+            where TOuterEnumerable : IEnumerable<TOuter> 
+            where TInnerEnumerable : IEnumerable<TInner>
         {
             await Task.WhenAll(outer, inner).ConfigureAwait(false);
             return outer.Result.Join(inner.Result, outerKeySelector, innerKeySelector, resultSelector);
         }
 
-        public static async Task<IEnumerable<TResult>> Join<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, Task<IEnumerable<TInner>> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector)
+        public static async Task<IEnumerable<TResult>> Join<TOuterEnumerable, TOuter, TInnerEnumerable, TInner, TKey, TResult>(this TOuterEnumerable outer, Task<TInnerEnumerable> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector)
+            where TOuterEnumerable : IEnumerable<TOuter> 
+            where TInnerEnumerable : IEnumerable<TInner>
         {
             return outer.Join(await Cfg(inner), outerKeySelector, innerKeySelector, resultSelector);
         }
 
-        public static async Task<IEnumerable<TResult>> Join<TOuter, TInner, TKey, TResult>(this Task<IEnumerable<TOuter>> outer, IEnumerable<TInner> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer)
+        public static async Task<IEnumerable<TResult>> Join<TOuterEnumerable, TOuter, TInnerEnumerable, TInner, TKey, TResult>(this Task<TOuterEnumerable> outer, TInnerEnumerable inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer) 
+            where TOuterEnumerable : IEnumerable<TOuter> 
+            where TInnerEnumerable : IEnumerable<TInner>
         {
             return (await Cfg(outer)).Join(inner, outerKeySelector, innerKeySelector, resultSelector, comparer);
         }
 
-        public static async Task<IEnumerable<TResult>> Join<TOuter, TInner, TKey, TResult>(this Task<IEnumerable<TOuter>> outer, Task<IEnumerable<TInner>> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer)
+        public static async Task<IEnumerable<TResult>> Join<TOuterEnumerable, TOuter, TInnerEnumerable, TInner, TKey, TResult>(this Task<TOuterEnumerable> outer, Task<TInnerEnumerable> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer) 
+            where TOuterEnumerable : IEnumerable<TOuter> 
+            where TInnerEnumerable : IEnumerable<TInner>
         {
             await Task.WhenAll(outer, inner).ConfigureAwait(false);
             return outer.Result.Join(inner.Result, outerKeySelector, innerKeySelector, resultSelector, comparer);
         }
 
-        public static async Task<IEnumerable<TResult>> Join<TOuter, TInner, TKey, TResult>(this IEnumerable<TOuter> outer, Task<IEnumerable<TInner>> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer)
+        public static async Task<IEnumerable<TResult>> Join<TOuterEnumerable, TOuter, TInnerEnumerable, TInner, TKey, TResult>(this TOuterEnumerable outer, Task<TInnerEnumerable> inner, Func<TOuter, TKey> outerKeySelector, Func<TInner, TKey> innerKeySelector, Func<TOuter, TInner, TResult> resultSelector, IEqualityComparer<TKey> comparer) 
+            where TOuterEnumerable : IEnumerable<TOuter> 
+            where TInnerEnumerable : IEnumerable<TInner>
         {
             return outer.Join(await Cfg(inner), outerKeySelector, innerKeySelector, resultSelector, comparer);
         }
