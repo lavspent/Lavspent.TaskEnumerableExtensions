@@ -37,19 +37,20 @@ namespace Lavspent.TaskEnumerableExtensions
     public static class Extensions
     {
 
-        private static ConfiguredTaskAwaitable<IEnumerable<TSource>> Cfg<TSource>(Task<IEnumerable<TSource>> source)
+        private static ConfiguredTaskAwaitable<T> Cfg<T>(Task<T> source)
         {
             return source.ConfigureAwait(false);
         }
 
+
         #region Where
 
-        public static async Task<IEnumerable<TSource>> Where<TSource>(this Task<IEnumerable<TSource>> source, Func<TSource, bool> predicate)
+        public static async Task<IEnumerable<TSource>> Where<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, Func<TSource, bool> predicate) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).Where(predicate);
         }
 
-        public static async Task<IEnumerable<TSource>> Where<TSource>(this Task<IEnumerable<TSource>> source, Func<TSource, int, bool> predicate)
+        public static async Task<IEnumerable<TSource>> Where<TSourceEnumerable, TSource>(this Task<TSourceEnumerable> source, Func<TSource, int, bool> predicate) where TSourceEnumerable : IEnumerable<TSource>
         {
             return (await Cfg(source)).Where(predicate);
         }
@@ -199,38 +200,53 @@ namespace Lavspent.TaskEnumerableExtensions
 
         #endregion
 
+        #region OrderBy/OrderByDescending
 
-        //public static IOrderedEnumerable<TSource> OrderBy<TSource, TKey>(this Task<IEnumerable<TSource>> source, Func<TSource, TKey> keySelector)
-        //{
-        //}
+        public static async Task<IOrderedEnumerable<TSource>> OrderBy<TSource, TKey>(this Task<IEnumerable<TSource>> source, Func<TSource, TKey> keySelector)
+        {
+            return (await Cfg(source)).OrderBy(keySelector);
+        }
 
-        //public static IOrderedEnumerable<TSource> OrderBy<TSource, TKey>(this Task<IEnumerable<TSource>> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
-        //{
-        //}
+        public static async Task<IOrderedEnumerable<TSource>> OrderBy<TSource, TKey>(this Task<IEnumerable<TSource>> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        {
+            return (await Cfg(source)).OrderBy(keySelector, comparer);
+        }
 
-        //public static IOrderedEnumerable<TSource> OrderByDescending<TSource, TKey>(this Task<IEnumerable<TSource>> source, Func<TSource, TKey> keySelector)
-        //{
-        //}
+        public static async Task<IOrderedEnumerable<TSource>> OrderByDescending<TSource, TKey>(this Task<IEnumerable<TSource>> source, Func<TSource, TKey> keySelector)
+        {
+            return (await Cfg(source)).OrderByDescending(keySelector);
+        }
 
-        //public static IOrderedEnumerable<TSource> OrderByDescending<TSource, TKey>(this Task<IEnumerable<TSource>> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
-        //{
-        //}
+        public static async Task<IOrderedEnumerable<TSource>> OrderByDescending<TSource, TKey>(this Task<IEnumerable<TSource>> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        {
+            return (await Cfg(source)).OrderByDescending(keySelector, comparer);
+        }
 
-        //public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector)
-        //{
-        //}
+        #endregion
 
-        //public static IOrderedEnumerable<TSource> ThenBy<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
-        //{
-        //}
+        #region ThenBy/ThenByDescending
 
-        //public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector)
-        //{
-        //}
+        public static async Task<IOrderedEnumerable<TSource>> ThenBy<TSource, TKey>(this Task<IOrderedEnumerable<TSource>> source, Func<TSource, TKey> keySelector)
+        {
+            return (await Cfg(source)).ThenBy(keySelector);
+        }
 
-        //public static IOrderedEnumerable<TSource> ThenByDescending<TSource, TKey>(this IOrderedEnumerable<TSource> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
-        //{
-        //}
+        public static async Task<IOrderedEnumerable<TSource>> ThenBy<TSource, TKey>(this Task<IOrderedEnumerable<TSource>> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        {
+            return (await Cfg(source)).ThenBy(keySelector, comparer);
+        }
+
+        public static async Task<IOrderedEnumerable<TSource>> ThenByDescending<TSource, TKey>(this Task<IOrderedEnumerable<TSource>> source, Func<TSource, TKey> keySelector)
+        {
+            return (await Cfg(source)).ThenByDescending(keySelector);
+        }
+
+        public static async Task<IOrderedEnumerable<TSource>> ThenByDescending<TSource, TKey>(this Task<IOrderedEnumerable<TSource>> source, Func<TSource, TKey> keySelector, IComparer<TKey> comparer)
+        {
+            return (await Cfg(source)).ThenByDescending(keySelector, comparer);
+        }
+
+        #endregion
 
         //public static IEnumerable<IGrouping<TKey, TSource>> GroupBy<TSource, TKey>(this Task<IEnumerable<TSource>> source, Func<TSource, TKey> keySelector)
         //{
